@@ -1,0 +1,43 @@
+{% block content %}
+    <div class="col-lg-4">
+        <div class="side">
+            <div class="pt-3">
+                <div class="card pl-2 pr-2">
+                    <form class="pt-3" action="{% url 'search' type='query' specifier='results' %}">
+                        <div class="form-group d-flex">
+                            <input type="text" name="q" placeholder="Search" id="searchbar" autocomplete="off">
+                            <button type="submit" id="searchbutton">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="pt-3">
+                <div class="card p-2">
+                    <a href="{% url 'company-create' %}">
+                        <div class="d-flex pt-3">
+                            <p>Create Company</p>
+                            <div class="ml-auto">
+                                <i class="far fa-building pt-1"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="pt-3">
+                <div class="card p-2">
+                    <a href="{% url 'deal-create' %}">
+                        <div class="d-flex pt-3">
+                            <p>Add Deal</p>
+                            <div class="ml-auto">
+                                <i class="far fa-handshake pt-1"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock content %}
