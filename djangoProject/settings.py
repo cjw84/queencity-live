@@ -24,7 +24,7 @@ SECRET_KEY = 'l38+tj!*ns&!mjo6&9ttsp1cs%^5v71s&puphh)c57*t54*w5z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['queencitydealtracker.herokuapp.com']
+ALLOWED_HOSTS = ['queencitydealtracker.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -123,6 +123,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'deals-home'
 
 LOCATION_FIELD = {
     'map.provider': 'openstreetmap',

@@ -1,60 +1,66 @@
 {% extends 'deals/base.html' %}
 {% load static %}
 {% block content %}
+    <!-- Start of content -->
     <div class="row">
         <div class="col-lg-8">
-            {% if request.path == '/' %}
-                <div class="row">
-                    <div class="col-lg-6">
-                        <canvas id="plot2"></canvas>
-                        <script>
-                            var ctx = document.getElementById('plot2').getContext('2d');
-                            var myChart = new Chart(ctx, {
-                                type: "line",
-                                data: {
-                                    labels: {{ labels2|safe }},
-                                    datasets: [{
-                                        data: {{ data2|safe }},
-                                        fill: true,
-                                        borderColor: "#4363d8"
-                                    }]
-                                },
-                                options: {
-                                    legend: {
-                                        display: false
+            {% if request.path == '/deal-home/' %}
+                {% if user.is_superuser %}
+                    <div class="row">
+                        <!-- Line plot -->
+                        <div class="col-lg-6">
+                            <canvas id="plot2"></canvas>
+                            <script>
+                                var ctx = document.getElementById('plot2').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: "line",
+                                    data: {
+                                        labels: {{ labels2|safe }},
+                                        datasets: [{
+                                            data: {{ data2|safe }},
+                                            fill: true,
+                                            borderColor: "#4363d8"
+                                        }]
                                     },
-                                    title: {
-                                        display: true,
-                                        text: 'Daily Funding'
+                                    options: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Daily Funding'
+                                        }
                                     }
-                                }
-                            });
-                        </script>
-                    </div>
-                    <div class="col-lg-6">
-                        <canvas id="plot1"></canvas>
-                        <script>
-                            var ctx = document.getElementById('plot1').getContext('2d');
-                            var myChart = new Chart(ctx, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: {{ labels1|safe }},
-                                    datasets: [{
-                                        data: {{ data1|safe }},
-                                        backgroundColor: {{ colors1|safe}},
-                                    }]
-                                },
-                                options: {
-                                    title: {
-                                        display: true,
-                                        text: 'Industry Funding'
+                                });
+                            </script>
+                        </div>
+                        <!-- Donut Plot -->
+                        <div class="col-lg-6">
+                            <canvas id="plot1"></canvas>
+                            <script>
+                                var ctx = document.getElementById('plot1').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: {{ labels1|safe }},
+                                        datasets: [{
+                                            data: {{ data1|safe }},
+                                            backgroundColor: {{ colors1|safe}},
+                                        }]
+                                    },
+                                    options: {
+                                        title: {
+                                            display: true,
+                                            text: 'Industry Funding'
+                                        }
                                     }
-                                }
-                            });
-                        </script>
+                                });
+                            </script>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
                 <div class="row">
+                    <!-- Map plot -->
                     <div class="col-lg-12">
                         {% autoescape off %}
                             {{ plt }}
@@ -64,6 +70,7 @@
             {% endif %}
             <div class="row">
                 <div class="col-lg-12">
+                    <!-- List of Deals -->
                     {% for deal in queryset %}
                         <div class="pt-3">
                             <div class="col-lg-12 card pt-2">

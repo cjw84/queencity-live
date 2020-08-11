@@ -4,10 +4,16 @@ from django.shortcuts import render, redirect, reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Sum
 from plotly.offline import plot
+from django.contrib.auth.decorators import login_required
 import plotly.graph_objects as go
 import pandas as pd
 
 
+def landing(request):
+    return render(request, 'deals/landing.html')
+
+# Load main landing page, generating plots and required data, before passing it in with the context
+@login_required
 def deals_home(request):
     colors1 = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c',
                '#fabebe',
@@ -65,6 +71,8 @@ def deals_home(request):
     return render(request, 'deals/deal-home.html', context)
 
 
+# Load deal create page, creates the DealForm in forms.py
+@login_required
 def create_deal(request):
     form = DealForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
@@ -77,6 +85,8 @@ def create_deal(request):
     return render(request, 'deals/create-deal.html', context)
 
 
+# Load company create page, creates the CompanyForm in forms.py
+@login_required
 def create_company(request):
     form = CompanyForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
@@ -89,6 +99,8 @@ def create_company(request):
     return render(request, 'deals/create-company.html', context)
 
 
+# Provides search functionality, can search by query (searchbar), industry, or company
+@login_required
 def search(request, type, specifier):
     if type == 'query':
         queryset = Deal.objects.all()

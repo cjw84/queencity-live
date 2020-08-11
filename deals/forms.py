@@ -1,7 +1,7 @@
 from django import forms
 from .models import Company, Deal
 
-
+#Creates form based on the Company Model
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
@@ -10,7 +10,7 @@ class CompanyForm(forms.ModelForm):
             'location': 'Location (Zoom out to view map, then select location)'
         }
 
-
+#Creates form based on Deal Model
 class DealForm(forms.ModelForm):
     date = forms.DateField(widget=forms.TextInput(
         attrs={'type': 'date'}

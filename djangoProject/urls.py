@@ -18,10 +18,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from deals import views as deal_views
+from  django.contrib.auth import views as auth_views
 
+# Main URLs
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', deal_views.deals_home, name='deals-home'),
+    path('', deal_views.landing, name='landing'),
+    path('login/', auth_views.LoginView.as_view(template_name='deals/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='deals/logout.html'), name='logout'),
+    path('deal-home/', deal_views.deals_home, name='deals-home'),
     path('deal-create/', deal_views.create_deal, name='deal-create'),
     path('company-create/', deal_views.create_company, name='company-create'),
     path('search/<str:type>/<str:specifier>/', deal_views.search, name='search'),

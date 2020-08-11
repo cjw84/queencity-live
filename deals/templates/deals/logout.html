@@ -1,0 +1,11 @@
+{% extends 'deals/base.html' %}
+{% block content %}
+    <hr>
+    <div class="row justify-content-center">
+        <div class="pt-2 text-center">
+            <small class="text-muted">You have been logged out.
+                <a href="{% url 'login' %}">Log in</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}

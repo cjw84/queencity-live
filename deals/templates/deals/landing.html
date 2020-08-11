@@ -1,0 +1,94 @@
+{% extends 'deals/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="content-section">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <!-- Start Landing -->
+        <div class="text-center pt-5" id="home">
+            <h1>World’s Greatest Deal Tracker. Period.</h1>
+            <p> Collaborate, search, and discover investment opportunities with our international network of funding
+                information!</p>
+            <div class="container text-center pt-5 pb-5">
+                <canvas id="rotatingGlobe" height=265 width=265></canvas>
+            </div>
+        </div>
+        <hr>
+        <div id="resources" class="offset">
+            <div class="col-12 text-center">
+                <h2 class="pt-5">Resources</h2>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6 pb-5">
+                    <i class="fas fa-search-dollar fa-2x p-5"></i>
+                    <h5>Explore</h5>
+                    <p>Find and search for new investment opportunities with our robust deal sourcing platform</p>
+                </div>
+                <div class="col-md-6 pb-5">
+                    <i class="fas fa-database fa-2x p-5"></i>
+                    <h5>Access</h5>
+                    <p>Stay informed on popular sectors and companies with real-time graphs and data.</p>
+                </div>
+            </div>
+        </div>
+        <!-- End Landing -->
+        <script type='text/javascript' src='https://d3js.org/d3.v3.min.js'></script>
+        <script type='text/javascript' src='https://d3js.org/topojson.v1.min.js'></script>
+        <script type='text/javascript'
+                src='https://cdn.rawgit.com/BinaryMuse/planetary.js/v1.1.2/dist/planetaryjs.min.js'></script>
+        <script type="text/javascript">
+            var canvas = document.getElementById('rotatingGlobe');
+            var globe = planetaryjs.planet();
+            globe.loadPlugin(autorotate(6));
+            globe.loadPlugin(planetaryjs.plugins.earth({
+                topojson: {file: 'https://raw.githubusercontent.com/BinaryMuse/planetary.js/v1.1.2/dist/world-110m.json'},
+                oceans: {fill: '#6ca3ff'},
+                land: {fill: 'rgb(188,232,153)'},
+                borders: {stroke: 'rgb(255,255,255)'}
+            }));
+            globe.loadPlugin(planetaryjs.plugins.drag({
+                onDragStart: function () {
+                    this.plugins.autorotate.pause();
+                },
+                onDragEnd: function () {
+                    this.plugins.autorotate.resume();
+                }
+            }));
+            globe.projection.scale(canvas.width / 2).translate([canvas.width / 2, canvas.height / 2]).rotate([0, -10, 0]);
+            globe.draw(canvas);
+
+            function autorotate(degPerSec) {
+                return function (planet) {
+                    var lastTick = null;
+                    var paused = false;
+                    planet.plugins.autorotate = {
+                        pause: function () {
+                            paused = true;
+                        },
+                        resume: function () {
+                            paused = false;
+                        }
+                    };
+                    planet.onDraw(function () {
+                        if (paused || !lastTick) {
+                            lastTick = new Date();
+                        } else {
+                            var now = new Date();
+                            var delta = now - lastTick;
+                            var rotation = planet.projection.rotate();
+                            rotation[0] += degPerSec * delta / 1000;
+                            if (rotation[0] >= 180) rotation[0] -= 360;
+                            planet.projection.rotate(rotation);
+                            lastTick = now;
+                        }
+                    });
+                };
+            };
+        </script>
+    </div>
+{% endblock content %}

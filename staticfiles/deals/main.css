@@ -1,0 +1,69 @@
+form li {
+    text-align: left;
+}
+
+small, p {
+    font-size: 1rem;
+}
+
+a {
+    color: black;
+    font-weight: 500;
+}
+
+a:hover {
+    color: grey;
+    text-decoration: none;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    color: black;
+    background-color: white;
+    border-color: black;
+}
+
+.page-item a {
+    color: black;
+    font-weight: 600;
+}
+
+.page-item a:hover {
+    color: black;
+    font-weight: 600;
+}
+
+#searchbar {
+    width: 95%;
+    border-style: none;
+}
+
+#searchbutton {
+    background: none;
+    border-style: none;
+}
+
+.side {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 65px;
+}
+
+.date {
+    color: black;
+    font-weight: 600;
+}
+
+.card {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.2s;
+}
+
+::placeholder {
+    color: black;
+    font-weight: 600;
+    opacity: 1;
+}
+
+#map_location {
+    width: auto !important;
+}
